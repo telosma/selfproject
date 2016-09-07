@@ -11,19 +11,46 @@
 |
 */
 
-Route::get('/', function () {
-    return view('home');
+
+
+Route::group(['middleware' => ['web']], function(){
+	Route::get('/', [
+        'as' => 'home',
+        'uses' => 'UserController@getHome',
+    ]);
+
+	// Route::get('entrydetail',function(){
+	// 	return view('entrydetail');
+	// });
+	Route::get('signup', function(){
+		return view('user.signup');
+	})->name('signup');
+
+	Route::post('sign-up', [
+		'as' => 'sign-up',
+		'uses' => 'UserController@postSignup',
+	]);
+
+	Route::get('signin', function(){
+		return view('user.signin');
+	})->name('signin');
+
+	Route::post('sign-in', [
+		'as' => 'sign-in',
+		'uses' => 'UserController@postSignin',
+	]);
+
+	Route::get('signout', [
+		'as' => 'signout',
+		'uses' => 'UserController@getSignout',
+	]);
+
+	Route::get('profile', [
+		'uses' => 'UserController@getProfile',
+		'as'   => 'user.profile',
+	]);
+
+    Route::resource('entry', 'EntryController');
+    Route::resource('comment', 'CommentController');
+
 });
-
-Route::get('welcome', function(){
-	return view('welcome');
-})->name('welcome');
-
-Route::get('signup', function(){
-	return view('user.signup');
-})->name('signup');
-
-Route::post('sign-up', [
-	'as' => 'sign-up',
-	'uses' => 'UserController@postSignup',
-]);

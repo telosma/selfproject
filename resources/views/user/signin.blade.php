@@ -18,12 +18,8 @@
 	@endsection
 	<div class="container">
 		<div class="row col-md-6 col-md-offset-3">
-		<h3>Sign-up Page</h3>
-			<form action="{!! route('sign-up') !!}" method="post">
-				<div class="form-group">
-					<label for="name">Your name</label>
-					<input type="text" id="name" name="name" class="form-control">
-				</div>
+		<h3>Sign-in Page</h3>
+			<form action="{!! route('sign-in') !!}" method="post">
 				<div class="form-group">
 					<label for="email">Email</label>
 					<input type="text" id="email" name="email" class="form-control">
@@ -32,12 +28,10 @@
 					<label for="password">Password</label>
 					<input type="password" id="password" name="password" class="form-control">
 				</div>
-				<div class="form-group">
-					<label for="ipassword">Confirm password</label>
-					<input type="ipassword" id="ipassword" class="form-control">
-				</div>
 				<input type="hidden" name="_token" value="{{ csrf_token() }}">
-				<input type="submit" class="btn btn-primary form-control" value="Dang ky">
+				
+				<input type="submit" class="btn btn-primary form-control" value="Sign-in">
+				<a href="{{ route('signup') }}" style="float:right; margin-top:10px;">Create new account</a>
 			</form>
 		</div>
 	</div>

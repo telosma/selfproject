@@ -1,52 +1,63 @@
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">Brand</a>
-    </div>
+  <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="{{ route('home') }}">Telosma</a>
+            </div>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-   <!--    <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-        <li><a href="#">Link</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">One more separated link</a></li>
-          </ul>
-        </li>
-      </ul> -->
-    <!--   <form class="navbar-form navbar-left">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="{{ route('home') }}">Home</a>
+                    </li>
+                    <li>
+                        <a href="#">About</a>
+                    </li>
+                    <li>
+                        <a id="a-create-entry">Create new entry</a>
+                    </li>
+                    @if(Auth::check())
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->name }}<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                          <li><a href="{{ route('user.profile') }}">Profile</a></li>
+                          <li><a href="{{ route('entry.index') }}">My Entries</a></li>
+                          <li role="separator" class="divider"></li>
+                          <li><a href="{{ route('signout') }}">Sign-out</a></li>
+                        </ul>
+                      </li>
+                    @else
+                    <li>
+                        <a href="{{ route('signup') }}">Sign-up</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('signin') }}">Sign-in</a>
+                    </li>
+                    @endif
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
         </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-      </form> -->
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="{{ route('signup') }}">Sign Up</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User Name <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Profile</a></li>
-            <li><a href="#">Post</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Logout</a></li>
-          </ul>
-        </li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="intro-header" style="background-image: url({{ url('images/lin-presentation.jpeg') }})">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="site-heading">
+                        <h1>Telosma Blog</h1>
+                        <hr class="small">
+                        <span class="subheading">From Asia to the World</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
