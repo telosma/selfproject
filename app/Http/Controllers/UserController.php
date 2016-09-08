@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Entry;
+use App\FollowEvent;
 use DB;
 use Illuminate\Http\Request;
 use App\Http\Requests\SignupRequest;
@@ -52,14 +53,62 @@ class UserController extends Controller
             return redirect()->route('home');
         }
     }
-    public function getProfile()
-    {
-        return view('user.profile');
+    public function getProfile(Request $request,$user_id)
+    {   
+        $followed = false;
+        if (Auth::check())
+        {
+            $followed = FollowEvent::checkFollowed($user_id, $request->user()->id);  
+        }      
+            $userInfo =  User::getInfo($user_id);
+            $userInfo->numEntry = Entry::countEntry($user_id);
+            $userInfo->numFollowing = FollowEvent::countFollowing($user_id);
+            $userInfo->numFollower = FollowEvent::countFollower($user_id);
+
+            return view('user.profile',['user_id' => $user_id, 'userInfo' => $userInfo, 'followed' => $followed ]);
+        
     }
 
     public function getHome()
     {
         $entries = Entry::orderBy('created_at','desc')->paginate(5);
         return view('home',['entries' => $entries]);
+    }
+
+    public function postFollowUser(Request $request)
+    {   
+        if ( Auth::check() )
+        {
+            $followed = FollowEvent::checkFollowed($request->follower_id, $request->user()->id);
+            if ( !$followed )
+            {
+                $followevent = new FollowEvent;
+                $followevent->follower_id = $request->follower_id;
+                $followevent->following_id = $request->user()->id;
+                        if ($followevent->save())
+                        {
+                            return redirect()->back();
+                        }
+                abort(404);
+            }
+        }
+        else
+        {
+            return redirect()->route('signin');
+        }
+        
+    }
+
+    public function postUnFollow(Request $request)
+    {   
+        if( Auth::check() )
+        {
+            $following_id = $request->user()->id;
+            $relation = FollowEvent::where('follower_id', $follower_id)->where('following_id', $following_id);
+        }
+        else
+        {
+            return redirect()->route('signin');
+        }
     }
 }

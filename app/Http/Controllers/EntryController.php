@@ -21,6 +21,7 @@ class EntryController extends Controller
     {   
         if(Auth::user())
         {
+
             $entries = Entry::where('user_id','=',Auth::user()->id)->paginate(3);
             return view('home', ['entries' => $entries]);
         }
@@ -53,17 +54,25 @@ class EntryController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'title' => 'required',
-            'body'  =>  'required',
-        ]);
+        if (Auth::check())
+        {
+            $this->validate($request, [
+                'title' => 'required',
+                'body'  =>  'required',
+            ]);
 
-        $entry = new Entry();
-        $entry->title = $request['title'];
-        $entry->body = $request['body'];
+            $entry = new Entry();
+            $entry->title = $request['title'];
+            $entry->body = $request['body'];
 
-        $request->user()->entries()->save($entry);
-        return redirect()->route('home');
+            $request->user()->entries()->save($entry);
+            return redirect()->route('home');
+        }
+        else
+        {
+            return redirect()->route('signin');
+        }
+        
     }
 
     /**

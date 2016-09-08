@@ -40,13 +40,13 @@
                         <p class="post-subtitle">
                             {{ $entry->body }}
                         </p>
-	                    <p class="post-meta">Posted by <a href="#"><strong>{{ $entry->user->name }}</strong></a> at {{ date('F nS, Y - g:iA', strtotime($entry->created_at)) }}</p>
+	                    <p class="post-meta">Posted by <a href="{{ route('user.profile', $entry->user->id) }}"><strong>{{ $entry->user->name }}</strong></a> at {{ date('F nS, Y - g:iA', strtotime($entry->created_at)) }}</p>
 	            </div>
 	            <hr>
             </div>
             
             <div class="col-md-10 col-md-offset-2">
-            <h4 class="comment-title"><span class="glyphicon glyphicon-comment"></span> n comments</h4>
+            <h5 class="comment-title"><span class="glyphicon glyphicon-comment"></span> {{ $entry->comments->count() }} comments</h5>
             <!-- Noi dung binh luan -->
             @foreach($entry->comments as $comment)
                 <div class="comment">
@@ -68,19 +68,23 @@
             </div>
 
             <!-- Form submit comment -->
-            <div class="col-md-8 col-md-offset-2">
-                <div class="new-comment">
-                    <form action="{{ route('comment.store') }}" method="post" id="form-comment">
-                        <div class="form-group">
-                            <input type="hidden" name="entry_id" value="{{ $entry->id }}"/>
-                            <textarea name="content" class="form-control" placeholder="your comment..." rows="3"></textarea>
-                                                
-                            <span class="glyphicon glyphicon-send" type="submit" id="icon-submit-comment"></span>
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
+                @if ( Auth::check() )
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="new-comment">
+                            <form action="{{ route('comment.store') }}" method="post" id="form-comment">
+                                <div class="form-group">
+                                    <input type="hidden" name="entry_id" value="{{ $entry->id }}"/>
+                                    <textarea name="content" class="form-control" placeholder="your comment..." rows="3"></textarea>
+                                                        
+                                    <span class="glyphicon glyphicon-send" type="submit" id="icon-submit-comment"></span>
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
+                                </div>
+                            </form>
                         </div>
-                    </form>
-                </div>
-            </div>
+                    </div>
+                @else
+                <a href="{{ route('signin') }}" class="col-md-offset-2">Sign-in to make comment</a>
+                @endif
             @else
                 {!! abort(404) !!}
 			@endif

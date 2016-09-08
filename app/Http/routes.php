@@ -45,7 +45,7 @@ Route::group(['middleware' => ['web']], function(){
 		'uses' => 'UserController@getSignout',
 	]);
 
-	Route::get('profile', [
+	Route::get('profile/{user_id}', [
 		'uses' => 'UserController@getProfile',
 		'as'   => 'user.profile',
 	]);
@@ -53,4 +53,13 @@ Route::group(['middleware' => ['web']], function(){
     Route::resource('entry', 'EntryController');
     Route::resource('comment', 'CommentController');
 
+    Route::post('user-follow', [
+    	'as' => 'userfollow.store',
+    	'uses' => 'UserController@postFollowUser'
+    ]);
+
+    Route::post('user-unfollow', [
+    	'as' => 'userfollow.delete',
+    	'uses' => 'UserController@postUnFollow',
+    ]);
 });

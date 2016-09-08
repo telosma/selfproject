@@ -34,4 +34,10 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Comment');
     }
+
+    public static function getInfo($user_id)
+    {
+        $info = User::where('id', $user_id)->get(['name', 'email'])->first();
+        return $info;
+    }
 }

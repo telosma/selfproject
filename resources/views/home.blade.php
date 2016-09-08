@@ -47,13 +47,14 @@
                             $pos=strpos($entry->body, ' ', 200); 
                         }
                         ?>
-                        <article class="post-subtitle">
+                    <article class="post-subtitle">
 
-                            {{ substr($entry->body,0,$pos ) }}
-                        </article>
-	                    
-	                    <p class="post-meta">Posted by <a href="#">{{ $entry->user->name }}</a> {{ $entry->created_at }}</p>
-	                </div>
+                        {{ substr($entry->body,0,$pos ) }}
+                    </article>
+                    
+                    <p class="post-meta">Posted by <a href="{{ route('user.profile', $entry->user->id) }}">{{ $entry->user->name }}</a> {{ $entry->created_at }}</p>
+	            </div>
+                    <h5 class="comment-title"><span class="glyphicon glyphicon-comment"></span> {{ $entry->comments->count() }} comments</h5>
 	            <hr>
 	        @endforeach
                 <!-- Pager -->
