@@ -58,7 +58,7 @@ Route::group(['middleware' => ['web']], function(){
     	'uses' => 'UserController@postFollowUser'
     ]);
 
-    Route::post('user-unfollow', [
+    Route::delete('user-unfollow', [
     	'as' => 'userfollow.delete',
     	'uses' => 'UserController@postUnFollow',
     ]);

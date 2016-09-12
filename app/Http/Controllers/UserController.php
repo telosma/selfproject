@@ -56,8 +56,7 @@ class UserController extends Controller
     public function getProfile(Request $request,$user_id)
     {   
         $followed = false;
-        if (Auth::check())
-        {
+        if (Auth::check()){
             $followed = FollowEvent::checkFollowed($user_id, $request->user()->id);  
         }      
             $userInfo =  User::getInfo($user_id);
@@ -104,7 +103,9 @@ class UserController extends Controller
         if( Auth::check() )
         {
             $following_id = $request->user()->id;
-            $relation = FollowEvent::where('follower_id', $follower_id)->where('following_id', $following_id);
+            $relation = FollowEvent::where('follower_id', $request->follower_id)->where('following_id', $following_id)->first();
+            $relation->delete();
+            return redirect()->back();
         }
         else
         {

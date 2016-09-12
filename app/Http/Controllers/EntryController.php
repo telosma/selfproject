@@ -30,12 +30,6 @@ class EntryController extends Controller
             return redirect()->route('signin');
         }
     }
-
-    // public function getEntry($entry_id)
-    // {
-    //     $entry = Entry::where('id','=',$entry_id)->get();
-    //     return view('entrydetail', ['entry' => $entry]);
-    // }
     /**
      * Show the form for creating a new resource.
      *
