@@ -34,7 +34,7 @@
 				</div>
 				<div class="form-group">
 					<label for="ipassword">Confirm password</label>
-					<input type="ipassword" id="ipassword" class="form-control">
+					<input type="hidden" id="ipassword" class="form-control">
 				</div>
 				<input type="hidden" name="_token" value="{{ csrf_token() }}">
 				<input type="submit" class="btn btn-primary form-control" value="Dang ky">
